@@ -17,7 +17,7 @@ Key features:
 
 - removes fixed effects and random variance from a dependent variable.
 
-- optinally, `remef` takes into account associated lower-order or 
+- optionally, `remef` takes into account associated lower-order or 
   higher-order effects when removing partial effects (this is important
   for statistical models including interactions).
   
