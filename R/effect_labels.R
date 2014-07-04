@@ -1,4 +1,4 @@
-#' Get the labels of the fixed effects of the model.
+#' Get the labels of the fixed effects of the model
 #' 
 #' The function returns the labels of coefficients of the model.
 #' Note: These labels are not identical to the term labels.
