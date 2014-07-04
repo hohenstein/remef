@@ -61,8 +61,7 @@ data(warpbreaks)
 fit2 <- aov(breaks ~ wool * tension, data = warpbreaks)
 # Since wool is a factor, the coefficient has another name, "woolB"
 asef("woolB", fit2, order = "higher")
-# Alternatively, generate the coefficent names with term2coef
-asef(term2coef("wool", fit2), fit2, order = "higher", include.base = TRUE)
+asef("woolB", fit2, order = "higher", include.base = TRUE)
 }
 \seealso{
 \code{\link{terms}} for extracting model terms.
