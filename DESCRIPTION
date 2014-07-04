@@ -1,0 +1,19 @@
+Package: remef
+Type: Package
+Title: Remove effects
+Version: 1.0.0
+Date: 2014/07/03
+Authors@R: c(person("Sven", "Hohenstein", role = c("aut", "cre"),
+                    email = "sven.hohenstein@uni-potsdam.de"),
+             person("Reinhold", "Kliegl", role = "aut"))
+Depends:
+  R (>= 3.0.0)
+Imports:
+  lme4 (>= 1.0)
+Description: Provides tools for removing partial effects from data. Allows
+  preparing data for focussing on a subset of effects in complex statistical
+  models. Finds associated effects of lower or higher order for a given term
+  or coefficient.
+License: GPL (>= 2)
+URL: https://github.com/hohenstein/remef/
+BugReports: https://github.com/hohenstein/remef/issues/
