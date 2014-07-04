@@ -51,8 +51,7 @@
 #' fit2 <- aov(breaks ~ wool * tension, data = warpbreaks)
 #' # Since wool is a factor, the coefficient has another name, "woolB"
 #' asef("woolB", fit2, order = "higher")
-#' # Alternatively, generate the coefficent names with term2coef
-#' asef(term2coef("wool", fit2), fit2, order = "higher", include.base = TRUE)
+#' asef("woolB", fit2, order = "higher", include.base = TRUE)
 
 asef <- 
 function(ef, model, order = c("higher", "lower", "all"), 
@@ -89,7 +88,9 @@ function(ef, model, order = c("higher", "lower", "all"),
   lab_list <- sapply(lab_idx, function(i) {
     if (ef_order[i] < ef_order_base) {
       ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1]]
-      full_labs[asgn == i][full_labs[asgn == i] %in% ef_splitted]
+      combinations <- apply(combn(ef_splitted, ef_order[i]),
+                            2, paste, collapse = ":")
+      full_labs[asgn == i][full_labs[asgn == i] %in% combinations]
     } else if (i == aidx) {
       if (include.base) ef
     } else {
