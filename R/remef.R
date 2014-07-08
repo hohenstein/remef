@@ -25,7 +25,7 @@
 #'  For more on details on mixed-effects models and partial effects, see
 #'  the help page of \code{\link{partial}}.
 #'  
-#'  TODO: More details on the funcion and its arguments
+#'  TODO: More details on the function and its arguments
 #'  
 #' @seealso \code{\link{keepef}} for a wrapper of \code{partial} with 
 #'  \code{keep = TRUE}.
