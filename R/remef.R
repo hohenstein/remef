@@ -37,6 +37,6 @@ remef <-
 function(model, fix = NULL, ran = NULL, grouping = FALSE,
          keep.intercept = TRUE, inverse = FALSE)
 {
-  partial(model, fix = NULL, ran = NULL, grouping = FALSE,
-          keep.intercept = TRUE, inverse = FALSE, keep = FALSE)
+  partial(model, fix = fix, ran = ran, grouping = grouping,
+          keep.intercept = keep.intercept, inverse = inverse, keep = FALSE)
 }
