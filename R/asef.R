@@ -59,17 +59,17 @@ function(ef, model, order = c("higher", "lower", "all"),
 {
   if ( length(ef) != 1L )
     stop("ef must include exactly one value.")
-  order <- match.arg(order)  
+  order <- match.arg(order)
   moma <- model.matrix(model)
   mterms <- terms(model)
   full_labs <- effect_labels(model)
   asgn <- attr(moma, "assign")
   idx <- match(ef, full_labs)
   aidx <- asgn[idx]
-  if ( !aidx ) 
+  if ( !aidx )
     stop("Hierarchy of effects is not defined for the intercept.")
   var_mat <- attr(mterms, "factors")
-  ef_order <- attr(mterms, "order")  
+  ef_order <- attr(mterms, "order")
   rel_matrix <- var_mat[ var_mat[ , aidx] > 0L, , drop = FALSE ]
   rel_cum <- colSums(rel_matrix)
   ef_order_base <- ef_order[aidx]
@@ -83,7 +83,7 @@ function(ef, model, order = c("higher", "lower", "all"),
                   },
                   all = {
                     rel_cum == ef_order_base | rel_cum == ef_order
-                  }           
+                  }
     ))
   lab_list <- sapply(lab_idx, function(i) {
     if (ef_order[i] < ef_order_base) {
@@ -94,8 +94,12 @@ function(ef, model, order = c("higher", "lower", "all"),
     } else if (i == aidx) {
       if (include.base) ef
     } else {
-      grep(ef, full_labs[asgn == i], fixed = TRUE, value = TRUE)
-    }        
+      cand_labs <- full_labs[asgn == i]
+      cand_splitted <- strsplit(cand_labs, ":", fixed = TRUE)
+      ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1]]
+      matches <- sapply(cand_splitted, "%in%", x = ef_splitted)
+      cand_labs[colSums(matches) == ef_order_base]
+    }
   })
   unlist(lab_list, use.names = FALSE)
 }
