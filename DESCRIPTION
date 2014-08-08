@@ -1,8 +1,8 @@
 Package: remef
 Type: Package
 Title: Remove effects
-Version: 1.0.0.1
-Date: 2014/07/04
+Version: 1.0.1
+Date: 2014/08/08
 Authors@R: c(person("Sven", "Hohenstein", role = c("aut", "cre"),
                     email = "sven.hohenstein@uni-potsdam.de"),
              person("Reinhold", "Kliegl", role = "aut"))
