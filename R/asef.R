@@ -87,17 +87,18 @@ function(ef, model, order = c("higher", "lower", "all"),
     ))
   lab_list <- sapply(lab_idx, function(i) {
     if (ef_order[i] < ef_order_base) {
-      ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1]]
+      ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1L]]
       combinations <- apply(combn(ef_splitted, ef_order[i]),
-                            2, paste, collapse = ":")
+                            2L, paste, collapse = ":")
       full_labs[asgn == i][full_labs[asgn == i] %in% combinations]
     } else if (i == aidx) {
       if (include.base) ef
     } else {
       cand_labs <- full_labs[asgn == i]
       cand_splitted <- strsplit(cand_labs, ":", fixed = TRUE)
-      ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1]]
-      matches <- sapply(cand_splitted, "%in%", x = ef_splitted)
+      ef_splitted <- strsplit(ef, ":", fixed = TRUE)[[1L]]
+      matches <- do.call(cbind, 
+                         lapply(cand_splitted, "%in%", x = ef_splitted))
       cand_labs[colSums(matches) == ef_order_base]
     }
   })
