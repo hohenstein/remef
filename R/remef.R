@@ -5,18 +5,19 @@
 #'  \pkg{lme4} package.
 #' 
 #' @param model a model object.
-#' @param fix a character of coefficient labels.
+#' @param fix either a character vector of coefficient labels 
+#'  (fixed effects) or a corresponding numeric index vector.
 #' @param ran a named list of integer vectors representing
-#'   random effects.
+#'  random effects.
 #' @param grouping logical. Should higher-order terms associated with the
 #'  ones in \code{fix} also be removed? The details are given under 
 #'  'Details'.
 #' @param keep.intercept logical. Should the intercept be kept
-#'   (default) or be removed?
+#'  (default) or be removed?
 #' @param inverse logical. If \code{TRUE}, the inverse of the link
 #'  function is applied (after the effects are removed).
 #' @return \code{remef} returns a numeric vector. The length of the
-#'   vector is equal to the number of observations of the model.   
+#'  vector is equal to the number of observations of the model.   
 #'                        
 #' @details \code{model} is an object returned by a model fitting 
 #'  function of the \pkg{lme4} package, i.e., \code{lmer} for
@@ -25,13 +26,116 @@
 #'  For more on details on mixed-effects models and partial effects, see
 #'  the help page of \code{\link{partial}}.
 #'  
-#'  TODO: More details on the function and its arguments
+#'  The response vector in a (generalised) linear mixed model
+#'  can be represented as a sum of fixed effects,
+#'  random effects, and residuals. \code{remef} "removes" a subset of these
+#'  effects.
+#'   
+#'  The valid \emph{character} strings for the parameter \code{fix} 
+#'  correspond to the names of the coeffcients in the model summary output.
+#'  Note that the name of a coefficient is not necessarily identical to the
+#'  name of a predictor variable (e.g., factor variables). Furthermore,
+#'  a single variable in a model formula can result in multiple 
+#'  model coefficients (e.g., polynomial contrasts). The names of a model
+#'  fit can be extracted with the function \code{effect_labels}.
+#'  The character string passed to \code{fix} must not include the 
+#'  intercept (\code{"(Intercept)"}). Use the parameter 
+#'  \code{keep.intercept} instead.
+#'   
+#'  If \code{fix} is a \emph{numeric} index vector, the indices correspond
+#'  to the order of coefficients in the model. For a fitted model object,
+#'  the \code{effect_labels} returns the names of the coefficients in their
+#'  order. Note that \code{fix} must not include the index of the
+#'  intercept (usually \code{1}). Use the parameter \code{keep.intercept}
+#'  instead.
+#'   
+#'  The parameter \code{ran} is used to specify random effects.
+#'  The names of the list passed to \code{ran} correspond to the names
+#'  of the random factors in the model summary.
+#'  Alternatively, the string \code{"all"} can pe passed to \code{ran}
+#'  which results in the selection of all random effects.
+#'   
+#'  If \code{grouping} is \code{FALSE}, only the specified fixed effects in
+#'  \code{fix} are used. 
+#'  If \code{grouping} is \code{TRUE}, associated effects of higher order
+#'  are removed too. For example,
+#'  if a model fit has the terms \code{A}, \code{B}, \code{C},
+#'  \code{A:B}, \code{A:C}, \code{B:C}, and \code{A:B:C}, terms of 
+#'  higher order relative to \code{A} are \code{A:B}, \code{A:C}, 
+#'  and \code{A:B:C}.
+#'   
+#'  The parameter \code{inverse} is only important for \emph{generalised}
+#'  linear mixed-effects models (in contrast to linear mixed-effects 
+#'  models). In the former type of statistical models, a link function
+#'  is specified to transform the response variable.
+#'  If \code{remef} is used with such a type of model, the resulting
+#'  values will be in the metric of the variable \emph{after} after the
+#'  transformation. For example, if the response is binary and a model with
+#'  the binomial distribution using the logit link funtion is fit,
+#'  the function \code{partial} will return
+#'  logits unless \code{inverse = TRUE} in which case logits will be 
+#'  transformed to proportions after the removal of effects. 
 #'  
-#' @seealso \code{\link{keepef}} for a wrapper of \code{partial} with 
+#' @seealso \code{\link{keepef}} for a wrapper of \code{\link{partial}} with 
 #'  \code{keep = TRUE}.
 #' @export
 #' @examples
-#' # TODO: Some examples
+#' library(lme4)
+#' 
+#' fm1 <- lmer(Reaction ~ 1 + Days + (1 + Days | Subject), sleepstudy)
+#' summary(fm1)
+#' 
+#' # remove fixed effect of 'Days'
+#' r1_1 <- remef(fm1, fix = "Days")
+#' 
+#' # remove fixed effect of 'Days' and the intercept
+#' r1_2 <- remef(fm1, fix = "Days", keep.intercept = FALSE)
+#' 
+#' # remove random slope of 'Days' (random factor: 'Subject')
+#' r1_3 <- remef(fm1, ran = list(Subject = "Days"))
+#' 
+#' # remove fixed effect of 'Days' and both random effects
+#' r1_4 <- remef(fm1, fix = "Days", ran = list(Subject = c("(Intercept)", "Days")))
+#' # equivalent command with numeric indices
+#' r1_5 <- remef(fm1, fix = 2, ran = list(Subject = c(1, 2)))
+#'  
+#' # remove all effects
+#' r1_6 <- remef(fm1, fix = 2, ran = "all", keep.intercept = FALSE)
+#' 
+#' 
+#' fm2 <- glmer(r2 ~ 1 + btype + Anger + (1 + Anger || item) + (1 | id), VerbAgg, family = binomial)
+#' summary(fm2)
+#' 
+#' # remove fixed effects of 'btype'
+#' # (since 'btype' is a three-level factor, two coefficients are estimated, 'btypescold' and 'btypeshout')
+#' r2_1 <- remef(fm2, fix = c("btypescold", "btypeshout"))
+#' # extract coefficient names related to 'btype'
+#' term2coef(fm2, "btype")
+#'
+#' # since `fm2` is a binomial GLMM, the partial effects are logits,
+#' # the parameter `inverse` can be used to return probablities instead
+#' r2_1_prob <- remef(fm2, fix = c("btypescold", "btypeshout"), inverse = TRUE)
+#' 
+#' # remove all random effects
+#' # (Note that the order of random effects for the random factor 'item' is:
+#' # 'Anger', '(Intercept)'; see `summary(fm2)`)
+#' r2_2 <- remef(fm2, ran = list(item = c(1, 2), id = 1))
+#' r2_3 <- remef(fm2, ran = "all")  # equivalent command
+#' 
+#' 
+#' fm3 <- lmer(angle ~ 1 + recipe * temperature + (1 | recipe:replicate), cake)
+#' summary(fm3)
+#' 
+#' # remove the random intercept
+#' r3_1 <- remef(fm3, ran = list("recipe:replicate" = 1))
+#' 
+#' # remove fixed effect of 'recipeB' and all higher-order terms (interactions)
+#' r3_2 <- remef(fm3, fix = "recipeB", grouping = TRUE)
+#' # these are the higher-order terms of 'recipeB'
+#' asef(fm3, "recipeB", order = "higher")
+#' 
+#' # remove all polynomials of 'temperature'
+#' r3_5 <- remef(fm3, fix = term2coef(fm3, "temperature"))
 
 remef <-
 function(model, fix = NULL, ran = NULL, grouping = FALSE,
