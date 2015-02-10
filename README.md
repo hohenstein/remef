@@ -155,6 +155,8 @@ If you have already been working with the old standalone function, note that the
 
 - The parameter `keep`, that was used to specify whether effect should be removed or kept, is no longer part of the `remef` function. In the package, there is a function `remef` for removing effects and a function `keepef` for keeping effects.
 
+- There is a new parameter `keep.intercept` that defaults to `TRUE`. It indicates whether the intercept should be kept (if `keep.intercept = TRUE`) or be removed (if `keep.intercept = FALSE`). It is not allowed to use the intercept in the parameter `fix`, e.g., `"(Intercept)"` or `1`. For example, if you want to remove a fixed effect `"factorA"` and the intercept, use the parameters `fix = "factorA"` and `keep.intercept = FALSE`.
+
 - The list `ran` must be a named list now. In the old `remef` function, the order of its list elements was the same as the order of random effects in the model. In the new `remef` package, the names of `ran` correspond to the names of the random factors. An example list `ran` is `list(Subject = c(1, 3), Item = c(2, 3, 4))`.
 
 - In the old `remef` function, the elements of the list `ran` were numeric index vectors corresponding to variance components (random intercept/slopes). Now, you can use character vectors including names of the variance components too. You can use both numeric index vectors and character vectors in `ran`, e.g., `list(Subject = c("(Intercept)", "Factor2"), Item = c(2, 3, 4))`). For a model fit object `model`, the command `ranef_labels(model)` returns a list containing the names of all variance components of all random factors.
