@@ -13,5 +13,5 @@
 ranef_labels <- 
 function(model) 
 {
-  getME(model, "cnms")
+  lapply(ranef(model), names)
 }
