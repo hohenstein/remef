@@ -3,8 +3,8 @@
 #' The function returns the labels of the terms of the model
 #' Note. The terms are not identical to the coefficients.
 #' 
-#' @param ef a character vector of coefficient labels.
 #' @param model a model object.
+#' @param ef a character vector of coefficient labels.
 #' 
 #' @return a character vector of term labels (one element for each
 #'    element in \code{ef}). 
@@ -24,21 +24,21 @@
 #' data(iris)
 #' fit <- lm(Sepal.Length ~ poly(Sepal.Width, 3), data = iris)
 #' summary(fit)
-#' coef2term("poly(Sepal.Width, 3)2", fit)
+#' coef2term(fit, "poly(Sepal.Width, 3)2")
 #'  
 #' data(warpbreaks)
 #' fit2 <- lm(breaks ~ wool * tension, data = warpbreaks)
 #' summary(fit2)
-#' coef2term(c("woolB", "tensionH"), fit2)
-#' coef2term(c("woolB:tensionM"), fit2)
+#' coef2term(fit2, c("woolB", "tensionH"))
+#' coef2term(fit2, c("woolB:tensionM"))
 
-coef2term <- 
-function(ef, model) 
+coef2term <-
+function(model, ef)
 {
   full_labs <- effect_labels(model)
   term_labs <- term_labels(model)
   moma <- model.matrix(model)
   asgn <- attr(moma, "assign")
   aidx <- match(ef, full_labs)
-  term_labs[asgn[aidx]]  
+  term_labs[asgn[aidx]]
 }

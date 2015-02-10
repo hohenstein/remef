@@ -1,22 +1,22 @@
 #' Find associated effects
 #'
-#' This function finds the labels of coefficients associated with 
-#' interactions or main effects in the results of various model 
+#' This function finds the labels of coefficients associated with
+#' interactions or main effects in the results of various model
 #' fitting functions.
 #' 
-#' @param ef a character string (a coefficent label).
 #' @param model a model object.
-#' @param order a character string vector giving the order of the 
-#'   terms to be returned.           
+#' @param ef a character string (a coefficent label).
+#' @param order a character string vector giving the order of the
+#'   terms to be returned.
 #'   One of \code{"higher"} (default), \code{"lower"},
 #'   or \code{"all"}, can be abbreviated.
-#' @param include.base logical. Should the labels in \code{ef} 
+#' @param include.base logical. Should the labels in \code{ef}
 #'   be included in the output?
 #'
 #' @return \code{asef} returns vectors of character strings
-#'   (coefficent  labels).   
+#'   (coefficent labels).   
 #'                        
-#' @details \code{model} is an object returned by a model fitting 
+#' @details \code{model} is an object returned by a model fitting
 #'   function (e.g., \code{\link{lm}}, \code{\link{aov}}).
 #'   
 #'   The character string passed to \code{ef} must not include the 
@@ -43,18 +43,18 @@
 #'  
 #' data(iris)
 #' fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width, data = iris)
-#' asef("Petal.Length:Petal.Width", fit, order = "higher")
-#' asef("Sepal.Width:Petal.Length:Petal.Width", fit, order = "lower")
-#' asef("Petal.Length:Petal.Width", fit, order = "all")
+#' asef(fit, "Petal.Length:Petal.Width", order = "higher")
+#' asef(fit, "Sepal.Width:Petal.Length:Petal.Width", order = "lower")
+#' asef(fit, "Petal.Length:Petal.Width", order = "all")
 #'  
 #' data(warpbreaks)
-#' fit2 <- aov(breaks ~ wool * tension, data = warpbreaks)
+#' fit2 <- lm(breaks ~ wool * tension, data = warpbreaks)
 #' # Since wool is a factor, the coefficient has another name, "woolB"
-#' asef("woolB", fit2, order = "higher")
-#' asef("woolB", fit2, order = "higher", include.base = TRUE)
+#' asef(fit2, "woolB", order = "higher")
+#' asef(fit2, "woolB", order = "higher", include.base = TRUE)
 
 asef <- 
-function(ef, model, order = c("higher", "lower", "all"), 
+function(model, ef, order = c("higher", "lower", "all"), 
          include.base = FALSE)
 {
   if ( length(ef) != 1L )
