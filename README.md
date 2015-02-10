@@ -57,19 +57,19 @@ The following commands are a demonstration of how the `remef` package can be use
 Remove the fixed effect of `Days`:
 
 ```R
-remef(fm1, fix = "Days", keep.intercept = TRUE)
+p_fm1_1 <- remef(fm1, fix = "Days", keep.intercept = TRUE)
 ```
 
 Since `keep.intercept = TRUE` is the default, we can shorten this command to
 
 ```R
-remef(fm1, fix = "Days")
+p_fm1_2 <- remef(fm1, fix = "Days")
 ```
 
 We can also used the index of the coefficient name `"Days"` instead of the name. The intercept corresponds to index 1, `Days` corresponds to index 2.
 
 ```R
-remef(fm1, fix = 2)
+p_fm1_3 <- remef(fm1, fix = 2)
 ```
 
 
@@ -78,13 +78,13 @@ remef(fm1, fix = 2)
 In this example, the random slope of `Days` should be removed:
 
 ```R
-remef(fm1, ran = list(Subject = "Days"))
+p_fm1_4 <- remef(fm1, ran = list(Subject = "Days"))
 ```
 
 Of course, we can replace the character string `"Days"` with its index. Note that the index corresponds to the order of variance components for the random factor `Subject` and is *not* related to the order of fixed-effect coefficients.
 
 ```R
-remef(fm1, ran = list(Subject = 2))
+p_fm1_5 <- remef(fm1, ran = list(Subject = 2))
 ```
 
 
@@ -93,7 +93,7 @@ remef(fm1, ran = list(Subject = 2))
 To remove the intercept, we can use `keep.intercept = FALSE`.
 
 ```R
-remef(fm1, keep.intercept = FALSE)
+p_fm1_6 <- remef(fm1, keep.intercept = FALSE)
 ```
 
 The above command will remove the intercept and therefore center `Reaction` on the intercept.
@@ -104,7 +104,7 @@ The above command will remove the intercept and therefore center `Reaction` on t
 If we want to remove both fixed effects and both random effects, we can use
 
 ```R
-remef(fm1, fix = "Days", ran = list(Subject = c(1, 2)), keep.intercept = FALSE)
+p_fm1_7 <- remef(fm1, fix = "Days", ran = list(Subject = c(1, 2)), keep.intercept = FALSE)
 ```
 
 Since this command will remove all fixed and random effects, the result is equal to the residuals of the model.
@@ -112,7 +112,7 @@ Since this command will remove all fixed and random effects, the result is equal
 If we want to remove *all* random effects from a model, we can pass the character string `"all"` to the parameter `ran`. This is a simple alternative to a list including all random effects, particularly for complex models with multiple random factors.
 
 ```R
-remef(fm1, ran = "all")
+p_fm1_8 <- remef(fm1, ran = "all")
 ```
 
 
@@ -122,18 +122,26 @@ If we want to remove a large proportion of fixed or random effects, it might be 
 
 ```R
 # the following commands are euqivalent
-remef(fm1, fix = "Days", ran = "all")
-keepef(fm1)
+p_fm1_9 <- remef(fm1, fix = "Days", ran = "all")
+p_fm1_10 <- keepef(fm1)
 ```
 
 The commands above remove all effects except the intercept. Note that `keep.intercept` defaults to `TRUE` for `keepef` too. If we want to remove all effects including the intercept with `keepef`, we have to use
 
 ```R
-keepef(fm1, keep.intercept = FALSE)
+p_fm1_11 <- keepef(fm1, keep.intercept = FALSE)
 ```
 
 The values obtained with the command above are equal to the model residuals.
 
+
+### More examples
+
+For more examples, have a look at the documentations of `remef` and `keepef`.
+```R
+?remef
+?keepef
+```
 
 ---
 
