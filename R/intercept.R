@@ -8,10 +8,10 @@
 #' @return a length-one numeric vector.
 #' 
 #' @details \code{model} is an object returned by a model fitting 
-#'   function (e.g., \code{\link{lm}}, \code{\link{aov}}).
+#'  function (e.g., \code{\link{lm}}, \code{\link{aov}}).
 #'   
-#'   If the model was fitted without an intercept, the function
-#'   returns \code{0} and generates a warning message.
+#'  If the model was fitted without an intercept, the function
+#'  returns \code{0} and generates a warning message.
 #'   
 #' @keywords internal
 #' @examples
