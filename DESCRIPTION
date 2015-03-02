@@ -1,7 +1,7 @@
 Package: remef
 Type: Package
 Title: Remove Partial Effects
-Version: 1.0.6-9000
+Version: 1.0.6.9000
 Date: 2015/02/10
 Authors@R: c(person("Sven", "Hohenstein", role = c("aut", "cre"),
                     email = "sven.hohenstein@uni-potsdam.de"),
