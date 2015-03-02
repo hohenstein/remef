@@ -43,8 +43,11 @@ function(model, term, as.list = FALSE)
   moma <- model.matrix(model)
   asgn <- attr(moma, "assign")
   idx <- match(term, term_labs)
+  if ( any(is.na(idx)) )
+    stop("The following terms were not found:\n\t",
+         paste(term[is.na(idx)], collapse = ", "))
   new_labs <- lapply(idx, function(x) full_labs[asgn == x])
-  if (!as.list)
+  if ( !as.list )
     unlist(new_labs, use.names = FALSE)
   else
     setNames(new_labs, term)
