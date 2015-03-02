@@ -206,15 +206,15 @@ function(model, fix = NULL, ran = NULL, grouping = FALSE,
     }
     fix <- full_labs_with_int[fix]
   }
-  eidx <- is.na(match(fix, full_labs))
-  if ( any(eidx) )
-    stop("The following effects are not present in the model:\n\t",
-          paste(fix[eidx], collapse = ", "))
   if ( grouping && !is.null(fix) ) {
     order <- if (keep) "lower" else "higher"
     fix <- unique(unlist(lapply(fix, asef, model = model, order = order,
                                 include.base = TRUE)))    
   }
+  eidx <- is.na(match(fix, full_labs))
+  if ( any(eidx) )
+    stop("The following effects are not present in the model:\n\t",
+          paste(fix[eidx], collapse = ", "))  
   if ( !keep && GLMM )
     # complement (the 'full_labs' without 'fix')
     fix <- setdiff(full_labs, fix)
