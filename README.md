@@ -99,7 +99,7 @@ p_fm1_6 <- remef(fm1, keep.intercept = FALSE)
 The above command will remove the intercept and therefore center `Reaction` on the intercept.
 
 
-### Remove multiple fixed an random effects
+### Remove multiple fixed and random effects
 
 If we want to remove both fixed effects and both random effects, we can use
 
