@@ -1,7 +1,7 @@
 #' Extract the coefficient names of terms of a model.
 #' 
-#' The function returns the labels of the coefficients of the model
-#' Note. The terms are not identical to the coefficients.
+#' The function returns the labels of the coefficients of the model.
+#' Note: The terms are not identical to the coefficients.
 #' 
 #' @param model a model object.
 #' @param term a character vector of term labels.
