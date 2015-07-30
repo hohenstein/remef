@@ -86,7 +86,7 @@
 #'   (effects are "removed"), \code{grouping} specifies whether effects of 
 #'   higher order should be selected and removed as well. Otherwise, if 
 #'   \code{keep = TRUE} (effects are "kept"), \code{grouping} specifies 
-#'   whether effects of higher order should be selected and removed as well. 
+#'   whether effects of lower order should be selected and kept as well. 
 #'   For example,
 #'   if a model fit has the terms \code{A}, \code{B}, \code{C},
 #'   \code{A:B}, \code{A:C}, \code{B:C}, and \code{A:B:C}, terms of 
