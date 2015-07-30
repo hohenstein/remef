@@ -85,7 +85,7 @@
 #'   function depends on the \code{keep} parameter: If \code{keep = FALSE} 
 #'   (effects are "removed"), \code{grouping} specifies whether effects of 
 #'   higher order should be selected and removed as well. Otherwise, if 
-#'   \code{group = TRUE} (effects are "kept"), \code{grouping} specifies 
+#'   \code{keep = TRUE} (effects are "kept"), \code{grouping} specifies 
 #'   whether effects of higher order should be selected and removed as well. 
 #'   For example,
 #'   if a model fit has the terms \code{A}, \code{B}, \code{C},
