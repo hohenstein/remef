@@ -192,8 +192,11 @@ function(model, fix = NULL, ran = NULL, grouping = FALSE,
   full_labs_with_int <- effect_labels(model)
   # ------------------------------------------------------------------------
   # Part 1: fixed effects
-  if ( has_intercept(model) )
+  if ( has_intercept(model) ) {
     full_labs <- full_labs_with_int[-1L]
+  } else {
+    full_labs <- full_labs_with_int
+  }
   # convert numeric `fix` vector to character vector
   if ( is.numeric(fix) ) {
     fix <- as.integer(fix)

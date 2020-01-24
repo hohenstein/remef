@@ -1,19 +1,20 @@
 Package: remef
 Type: Package
 Title: Remove Partial Effects
-Version: 1.0.6.9000
-Date: 2015/02/10
+Version: 1.0.7
+Date: 2020/01/24
 Authors@R: c(person("Sven", "Hohenstein", role = c("aut", "cre"),
                     email = "sven.hohenstein@uni-potsdam.de"),
              person("Reinhold", "Kliegl", role = "aut"))
 Depends:
-  R (>= 3.0.0)
+    R (>= 3.0.0), stats
 Imports:
-  lme4 (>= 1.0)
+    lme4 (>= 1.0)
 Description: Provides tools for removing partial effects from data. Allows
-  preparing data for focussing on a subset of effects in complex statistical
-  models. Finds associated effects of lower or higher order for a given term
-  or coefficient.
+    preparing data for focussing on a subset of effects in complex statistical
+    models. Finds associated effects of lower or higher order for a given term
+    or coefficient.
 License: GPL (>= 2)
 URL: https://github.com/hohenstein/remef/
 BugReports: https://github.com/hohenstein/remef/issues/
+RoxygenNote: 7.0.2

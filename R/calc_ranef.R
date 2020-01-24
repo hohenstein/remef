@@ -32,7 +32,7 @@ function(model, ran)
   if ( is.list(ran) && length(ran) > 0L ) {
     stopifnot(is.numeric(unlist(ran)))
     ran <- lapply(ran, unique)
-    ran_valid_idx <- vapply(ran, length, integer(1)) > 0L
+    ran_valid_idx <- vapply(ran, length, 1L) > 0L
     ran <- ran[ran_valid_idx]
   }
   ran_labs <- ranef_labels(model)
@@ -43,13 +43,13 @@ function(model, ran)
   )
     stop("The list 'ran' has invalid names.")
   # number of random effects for each random factor
-  num_re <- vapply(ran_labs, length, FUN.VALUE = integer(1L),
+  num_re <- vapply(ran_labs, length, FUN.VALUE = 1L,
                    USE.NAMES = FALSE)
   num_re_previous <- c(0L, cumsum(head(num_re, -1L)))
   rf_idx <- match(names(ran), names(ran_labs))
   ran_model <- ranef(model)
   # subset of random effects corresponding to 'ran'
-  ran_model_sub <- lapply(mapply("[", ran_model[rf_idx], ran,
+  ran_model_sub <- lapply(mapply(`[`, ran_model[rf_idx], ran,
                                  SIMPLIFY = FALSE),
                           unlist)
   # transform the list of 'Zt' matrices into a list of lists
@@ -59,9 +59,9 @@ function(model, ran)
   re_list_flat <- getME(model, "Ztlist")
   re_list <- lapply(re_list_idx, function(x) re_list_flat[x])
   # extract subsets
-  re_list_sub <- mapply("[", re_list[rf_idx], ran,
+  re_list_sub <- mapply(`[`, re_list[rf_idx], ran,
                         SIMPLIFY = FALSE)
-  ran_model_sub <- mapply("[", ran_model[rf_idx], ran,
+  ran_model_sub <- mapply(`[`, ran_model[rf_idx], ran,
                           SIMPLIFY = FALSE)
   # here the calculation takes place
   ranef_prods <- mapply(function(mats, vecs)
